@@ -49,7 +49,6 @@ function call(id, operator, operand1, operand2) {
     var time = new Date();
 
     return Json;
-
 }
 
 function log(time, result) {
