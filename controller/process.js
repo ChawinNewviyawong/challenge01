@@ -1,4 +1,12 @@
-function call(operator, operand1, operand2) {
+function call(id, operator, operand1, operand2) {
+
+    if (typeof operand1 != "number") {
+        operand1 = parseInt(operand1);
+    }
+    if (typeof operand2 != "number") {
+        operand2 = parseInt(operand2);
+    }
+
     var result;
     switch (operator) {
         case "+":
@@ -30,12 +38,23 @@ function call(operator, operand1, operand2) {
         default:
             break;
     }
-    result = result.toFixed(4);
-    return result;
+
+    var Json = {
+        tx_id: id,
+        proposition: operand1 + " " + operator + " " + operand2,
+        result1: result.toFixed(4),
+        result2: result
+    }
+
+    var time = new Date();
+
+    return Json;
+
 }
 
-function log(time) {
-    
+function log(time, result) {
+    var out_time = new Date();
+    console.log(result.tx_id, time, result.proposition, result.result1, result.result2, out_time);
 }
 
 module.exports = {
