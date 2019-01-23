@@ -2,10 +2,8 @@ var controller = require('../controller/process')
 var app = require('express').Router();
 
 app.post('/cal', function (req, res, next) {
-    // var result = controller.call(req.body.operator, req.body.operand1, req.body.operand2);
-    // controller.log(req.body.tx_id, req.body.time, result)
     
-    var time = req.body.time;
+    var time = new Date();
     var result = controller.call(req.body.operator, req.body.operand1, req.body.operand2);
     if (req.body.operand1 == "" || req.body.operand2 == ""){
         res.status(400);
@@ -18,6 +16,10 @@ app.post('/cal', function (req, res, next) {
     if (result.code == 400){
         res.status(400);
         res.send("Operator incorrect!!!!!!")
+    }
+    else {
+        var proposition = req.body.operand1 + " " + req.body.operator + " " + req.body.operand2;
+        controller.log(req.body.tx_id, time, proposition, result);
     }
     res.status(201);
     
