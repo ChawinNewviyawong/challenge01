@@ -17,23 +17,23 @@ function call(operator, operand1, operand2) {
         operand2 = Number(operand2);
             result = operand1 + operand2;
             resultFloat = Number(result.toFixed(4));
-            resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+            resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             break;
         case "-":
             result = operand1 - operand2;
             resultFloat = Number(result.toFixed(4));
-            resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+            resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             break;
         case "*":
             result = operand1 * operand2;
             resultFloat = Number(result.toFixed(4));
-            resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+            resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             break;
         case "/":
             if (operand2 != 0) {
                 result = operand1 / operand2;
                 resultFloat = Number(result.toFixed(4));
-                resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+                resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             }
             else {
                 result = null;
@@ -42,9 +42,9 @@ function call(operator, operand1, operand2) {
         case "DIV":
             if (operand2 != 0) {
                 result = operand1 / operand2;
-                result = Math.round(result);
+                result = Math.floor(result);
                 resultFloat = Number(result.toFixed(4));
-                resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+                resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             }
             else {
                 result = null;
@@ -54,7 +54,7 @@ function call(operator, operand1, operand2) {
             if (operand2 != 0) {
                 result = operand1 % operand2;
                 resultFloat = Number(result.toFixed(4));
-                resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+                resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             }
             else {
                 result = null;
@@ -66,7 +66,7 @@ function call(operator, operand1, operand2) {
     }
     proposition = operand1 + " " + operator + " " + operand2;
     resultFloat = Number(result.toFixed(4));
-    resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+    resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
     return {resultFloat, resultSeientific, code};
 
 }
