@@ -53,7 +53,7 @@ app.post('/cal', function (req, res, next) {
             error_message: "Operator incorrect!"
         });
     }
-    else {
+    if (res.status == 400) {
         var proposition = req.body.operand1 + " " + req.body.operator + " " + req.body.operand2;
         controller.log(req.body.tx_id, time, proposition, result);
     }

@@ -62,9 +62,6 @@ function call(operator, operand1, operand2) {
             code=400;
             break;
     }
-    proposition = operand1 + " " + operator + " " + operand2;
-    resultFloat = Number(result.toFixed(4));
-    resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
     return {resultFloat, resultSeientific, code};
 
 }
