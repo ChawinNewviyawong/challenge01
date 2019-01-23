@@ -40,7 +40,12 @@ function call(operator, operand1, operand2) {
         case "DIV":
             if (operand2 != 0) {
                 result = operand1 / operand2;
-                result = Math.floor(result);
+                if ((Number(operand2) > 0 && operand2 > operand1) || (Number(operand2) < 0 && operand2 < operand1)){
+                    result = Math.round(result);    
+                }
+                else {
+                    result = Math.floor(result);
+                }
                 resultFloat = Number(result.toFixed(4));
                 resultSeientific = resultFloat.toExponential(4).replace(/e\+?/, ' x 10^')
             }

@@ -2,8 +2,15 @@ var controller = require('../controller/process')
 var app = require('express').Router();
 var dateFormat = require('dateformat')
 
+function appendHeader(res) {
+    res.header('X-Content-Type-Options', 'nosniff');
+    res.header('X-Frame-Options', 'DENY');
+    res.header('X-XSS-Protection', '1; mode=block');
+    res.header('Content-Security-Policy', "script-src 'self'");
+  }
+
 app.post('/cal', function (req, res, next) {
-    
+    appendHeader(res);
     var operator;
     if (req.body.operator == "div" || req.body.operator == "mod"){
         operator = (req.body.operator).toUpperCase();
@@ -53,10 +60,10 @@ app.post('/cal', function (req, res, next) {
             error_message: "Operator incorrect!"
         });
     }
-    if (res.status != 400) {
-        var proposition = req.body.operand1 + " " + req.body.operator + " " + req.body.operand2;
-        controller.log(req.body.tx_id, time, proposition, result);
-    }
+    
+    var proposition = req.body.operand1 + " " + req.body.operator + " " + req.body.operand2;
+    controller.log(req.body.tx_id, time, proposition, result);
+
     res.status(201);
     
     //appendHeader(res)
