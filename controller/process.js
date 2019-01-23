@@ -1,13 +1,16 @@
-function call(id, operator, operand1, operand2) {
-
-    if (typeof operand1 != "number") {
-        operand1 = parseInt(operand1);
-    }
-    if (typeof operand2 != "number") {
-        operand2 = parseInt(operand2);
-    }
-
+var dateFormat = require('dateformat')
+var fs = require('file-system');
+var csvWriter = require('csv-write-stream')
+var writer = csvWriter({sendHeaders: false});
+function call(operator, operand1, operand2) {
+    
+    var proposition;
     var result;
+    var resultFloat;
+    var resultSeientific;
+    // var numOperand1 = Number(operand1);
+    // var numOperand2 = Number(operand2);
+    
     switch (operator) {
         case "+":
             result = operand1 + operand2;
@@ -35,25 +38,42 @@ function call(id, operator, operand1, operand2) {
                 result = null;
             }
             break;
+        case "MOD":
+            if (operand2 != 0) {
+                result = operand1 % operand2;
+                
+            }
+            else {
+                result = null;
+            }
+            break;
         default:
             break;
     }
-
-    var Json = {
-        tx_id: id,
-        proposition: operand1 + " " + operator + " " + operand2,
-        result1: result.toFixed(4),
-        result2: result
-    }
-
-    var time = new Date();
-
-    return Json;
+    proposition = operand1 + " " + operator + " " + operand2;
+    resultFloat = Number(result.toFixed(4));
+    resultSeientific = resultFloat.toExponential().replace(/e\+?/, ' x 10^')
+    return {proposition, resultFloat, resultSeientific};
+ 
 }
 
-function log(time, result) {
-    var out_time = new Date();
-    console.log(result.tx_id, time, result.proposition, result.result1, result.result2, out_time);
+function log(tx_id, time, result) {
+    var out_time = dateFormat(new Date(), "HH:MM:ss.l");
+    console.log(tx_id, time, result.proposition, result.resultFloat, result.resultSeientific, out_time);
+
+    if (!fs.existsSync('log.csv'))
+        writer = csvWriter({ headers: ["TX_ID", "TIME", "PROPOSITION", "RESULT_FLOAT", "RESULT_SEIENTIFIC", "OUT_TIME"]})
+    else 
+        writer = csvWriter({sendHeaders: false});
+    writer.pipe(fs.createWriteStream('log.csv',  {flags: 'a'}))
+    writer.write({
+        TX_ID: tx_id,
+        TIME: time,
+        PROPOSITION: result.proposition,
+        RESULT_FLOAT: result.resultFloat,
+        RESULT_SEIENTIFIC: result.resultSeientific,
+        OUT_TIME: out_time})
+    writer.end()
 }
 
 module.exports = {

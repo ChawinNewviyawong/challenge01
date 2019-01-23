@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "csv-write-stream": "^2.0.0",
+    "csv-writer": "^1.2.0",
+    "dateformat": "^3.0.3",
+    "express": "^4.16.4",
+    "file-system": "^2.2.2"
   }
 }
