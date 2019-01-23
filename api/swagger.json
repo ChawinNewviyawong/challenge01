@@ -1,0 +1,119 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Blockchain API",
+    "version": "1.1.0",
+    "title": "API"
+  },
+  "host": "localhost:3000",
+  "basePath": "",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/cal": {
+      "post": {
+        "tags": [
+          "RR"
+        ],
+        "summary": "Calculate Number",
+        "description": "Calculate Number",
+        "operationId": "Calculate Number",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CalculateNumber"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CalculateNumberRep"
+            }
+          },
+          "400": {
+            "description": "Failed",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "error": {
+      "type": "object",
+      "required": [
+        "error_code",
+        "error_message"
+      ],
+      "properties": {
+        "error_code": {
+          "type": "number",
+          "description": "HTTP reponse code"
+        },
+        "error_message": {
+          "type": "string",
+          "description": "Error message"
+        }
+      }
+    },
+    "CalculateNumber": {
+      "required": [
+        "operator",
+        "operand1",
+        "operand2",
+        "tx_id"
+      ],
+      "properties": {
+        "operator": {
+          "type": "string"
+        },
+        "operand1": {
+          "type": "integer"
+        },
+        "operand2": {
+          "type": "integer"
+        },
+        "tx_id": {
+          "type": "integer"
+        }
+      },
+      "example": {
+        "operator": "+",
+        "operand1": 100,
+        "operand2": 5,
+        "tx_id": 1
+      }
+    },
+    "CalculateNumberRep": {
+      "required": [
+        "operator",
+        "operand1",
+        "operand2",
+        "tx_id"
+      ],
+      "properties": {
+        "resultfloat": {
+          "type": "string"
+        },
+        "resultseientific": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "resultfloat": "",
+        "resultseientific": ""
+      }
+    }
+  }
+}
