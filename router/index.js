@@ -61,10 +61,9 @@ app.post('/cal', function (req, res, next) {
     
     //appendHeader(res)
     res.json({
-        proposition : result.proposition,
-        result1Float : result.resultFloat,
-        result2Seientific : result.resultSeientific,
-        TX_ID : req.body.tx_id
+        resultfloat : result.resultFloat,
+        resultseientific : result.resultSeientific,
+        tx_id : req.body.tx_id
     });
     
 });

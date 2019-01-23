@@ -8,8 +8,6 @@ function call(operator, operand1, operand2) {
     var resultFloat;
     var resultSeientific;
     var code;
-    // var numOperand1 = Number(operand1);
-    // var numOperand2 = Number(operand2);
     
     switch (operator) {
         case "+":
