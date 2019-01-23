@@ -1,9 +1,10 @@
 var controller = require('../controller/process')
 var app = require('express').Router();
+var dateFormat = require('dateformat')
 
 app.post('/cal', function (req, res, next) {
     
-    var time = new Date();
+    var time = dateFormat(new Date(), "HH:MM:ss.l");
     var result = controller.call(req.body.operator, req.body.operand1, req.body.operand2);
     if (req.body.operand1 == "" || req.body.operand2 == ""){
         res.status(400);
@@ -34,4 +35,3 @@ app.post('/cal', function (req, res, next) {
 });
 
 module.exports = app;
-
