@@ -2,8 +2,23 @@ var controller = require('../controller/process')
 var app = require('express').Router();
 
 app.post('/cal', function (req, res, next) {
+    // var result = controller.call(req.body.operator, req.body.operand1, req.body.operand2);
+    // controller.log(req.body.tx_id, req.body.time, result)
+    
+    var time = req.body.time;
     var result = controller.call(req.body.operator, req.body.operand1, req.body.operand2);
-    controller.log(req.body.tx_id, req.body.time, result)
+    if (req.body.operand1 == "" || req.body.operand2 == ""){
+        res.status(400);
+        res.send("No Operand Value !!!!!!!!")
+    }
+    if (req.body.tx_id == ""){
+        res.status(400);
+        res.send("TX_ID can not null")
+    }
+    if (result.code == 400){
+        res.status(400);
+        res.send("Operator incorrect!!!!!!")
+    }
     res.status(201);
     
     //appendHeader(res)
@@ -13,6 +28,7 @@ app.post('/cal', function (req, res, next) {
         result2Seientific : result.resultSeientific,
         TX_ID : req.body.tx_id
     });
+    
 });
 
 module.exports = app;
