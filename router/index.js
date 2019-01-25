@@ -10,7 +10,7 @@ function appendHeader(res) {
   }
 
 app.post('/cal', function (req, res, next) {
-    appendHeader(res);
+    
     var operator;
     if (req.body.operator == "div" || req.body.operator == "mod"){
         operator = (req.body.operator).toUpperCase();
@@ -19,6 +19,7 @@ app.post('/cal', function (req, res, next) {
     var time = dateFormat(new Date(), "HH:MM:ss.l");
     if (req.body.operand2 == 0 && (operator == "DIV" || operator == "MOD" || operator == "/")){
         res.status(400);
+
         res.json({
             error_code: "4",
             error_message: "Divide by 0!"
@@ -60,10 +61,8 @@ app.post('/cal', function (req, res, next) {
             error_message: "Operator incorrect!"
         });
     }
-    
-    var proposition = req.body.operand1 + " " + req.body.operator + " " + req.body.operand2;
-    controller.log(req.body.tx_id, time, proposition, result);
 
+    appendHeader(res);
     res.status(201);
     
     //appendHeader(res)
@@ -72,6 +71,9 @@ app.post('/cal', function (req, res, next) {
         resultseientific : result.resultSeientific,
         tx_id : req.body.tx_id
     });
+
+    var proposition = req.body.operand1 + " " + req.body.operator + " " + req.body.operand2;
+    controller.log(req.body.tx_id, time, proposition, result);
     
 });
 
